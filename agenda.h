@@ -17,9 +17,12 @@ class Agenda{
     DateHeure reserverC(const Coordonnees& c, int rayon, int puissancemin, DateHeure datemin, int duree, std::string& borneid);
     
   private:
-
-
-
+  struct Borne {
+    Coordonnees position;
+    int puissance;
+    ArbreMap<DateHeure, int> reservations;
+  };
+  mutable ArbreMap<std::string, Borne> bornes;
 
 };
 

@@ -8,13 +8,14 @@
 
 class DateHeure{
   public:
-    
     bool operator<(const DateHeure& dh) const;
+    void ajouterSecondes(int sec) { total_secondes += sec; }
+    int totalSecondes() const { return total_secondes; }
     
   private:
-  int total_secondes;
-  friend std::ostream& operator << (std::ostream&, const DateHeure& dh);
-  friend std::istream& operator >> (std::istream&, DateHeure& dh);
+    int total_secondes = 0;
+    friend std::ostream& operator << (std::ostream&, const DateHeure& dh);
+    friend std::istream& operator >> (std::istream&, DateHeure& dh);
 };
 
 
