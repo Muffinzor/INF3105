@@ -9,34 +9,60 @@
 #include "arbreavl.h"
 
 template <class K, class V>
-class ArbreMap {
-
-  public:
-    bool contient(const K&) const;
-
-    void enlever(const K&);
-    void vider();
-    bool vide() const;
-
-    const V& operator[] (const K&) const;
-    V& operator[] (const K&);
-
-  private:
-    struct Entree {
-        K cle;
-        V valeur;
-
-        Entree(const K& c, const V& v = V()) : cle(c), valeur(v) {}
-
-        bool operator < (const Entree& autre) const {
-            return cle < autre.cle;
-        }
-        bool operator == (const Entree& autre) const {
-            return cle == autre.cle;
-        }
+class ArbreMap{
+    class Entree{
+        public:
+            Entree(const K& c):cle(c),valeur(){}
+            K cle;
+            V valeur;
+            bool operator< (const Entree& e) const {return cle < e.cle;}
+            bool operator> (const Entree& e) const {return cle > e.cle;}
+            bool operator== (const Entree& e) const {return cle == e.cle;}
     };
-
     ArbreAVL<Entree> entrees;
+  public:
+      class Iterateur{
+        public:
+          Iterateur(ArbreMap& a) : iter(a.entrees.debut()) {}
+          Iterateur(typename ArbreAVL<Entree>::Iterateur i) : iter(i) {}
+
+          operator bool() const {
+            return iter.operator bool();
+          }
+
+          Iterateur& operator++() {
+            ++iter;
+            return *this;
+          }
+
+          const K& cle() const {
+            return (*iter).cle;
+          }
+          V& valeur() {
+            return (V&) (*iter).valeur;
+          }
+        private:
+          typename ArbreAVL<Entree>::Iterateur iter;
+      };
+
+
+      Iterateur debut() {
+        return Iterateur(*this);
+      }
+      Iterateur fin() {
+        return Iterateur(entrees.fin());
+      }
+      Iterateur rechercher(const K& cle) {
+        return Iterateur(entrees.rechercher(cle));
+      }
+
+      bool contient(const K&) const;
+      void enlever(const K&);
+      void vider();
+      bool vide() const;
+
+      const V& operator[] (const K&) const;
+      V& operator[] (const K&);
 };
 
 template <class K, class V>

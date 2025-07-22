@@ -1,5 +1,5 @@
 /*  INF3105 - Structures de données et algorithmes       *
- *  UQAM / Département d'informatique                    *//
+ *  UQAM / Département d'informatique                    */
 
 #if !defined(_COORDONNEES__H_)
 #define _COORDONNEES__H_
