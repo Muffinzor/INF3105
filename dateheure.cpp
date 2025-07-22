@@ -8,18 +8,17 @@
 
 
 bool DateHeure::operator<(const DateHeure& dh) const{
-    // ...
-    return true;
+    return total_secondes < dh.total_secondes;
 }
 
 std::ostream& operator << (std::ostream& os, const DateHeure& dh){
-    int jours=0, heures=0, minutes=0, secondes=0;
-    // ...
-    // jours = dh. ...;
-    // ...
-
-
-
+    int secondes = dh.total_secondes;
+    int jours = secondes / 86400; // 24*60*60
+    secondes %= 86400;
+    int heures = secondes / 3600;
+    secondes %= 3600;
+    int minutes = secondes / 60;
+    secondes %= 60;
 
     char chaine[40];
     sprintf(chaine, "%d_%02d:%02d:%02d", jours, heures, minutes, secondes);
@@ -28,15 +27,15 @@ std::ostream& operator << (std::ostream& os, const DateHeure& dh){
 }
 
 std::istream& operator >> (std::istream& is, DateHeure& dh){
-    int jours=0, heures=0, minutes=0, secondes=0;
-    char seperateurlu1=0, seperateurlu2=0, seperateurlu3=0;
-    is >> jours >> seperateurlu1 >> heures >> seperateurlu2 >> minutes >> seperateurlu3 >> secondes;
-    assert(seperateurlu1=='_');
-    assert(seperateurlu2==':');
-    assert(seperateurlu3==':');
-    // ...
-    // dh. = ...;
-    // ...
+    int jours = 0, heures = 0, minutes = 0, secondes = 0;
+    char sep1 = 0, sep2 = 0, sep3 = 0;
+
+    is >> jours >> sep1 >> heures >> sep2 >> minutes >> sep3 >> secondes;
+    assert(sep1 == '_');
+    assert(sep2 == ':');
+    assert(sep3 == ':');
+
+    dh.total_secondes = (((jours * 24 + heures) * 60 + minutes) * 60 + secondes);
     return is;
 }
 

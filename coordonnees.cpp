@@ -8,14 +8,10 @@
 #define PI 3.14159265359
 
 Coordonnees::Coordonnees(const Coordonnees& coor)
-  : latitude(coor.latitude), longitude(coor.longitude)
-{
-}
+  : latitude(coor.latitude), longitude(coor.longitude){}
 
 Coordonnees::Coordonnees(double latitude_, double longitude_) 
-  : latitude(latitude_), longitude(longitude_)
-{
-}
+  : latitude(latitude_), longitude(longitude_){}
 
 double Coordonnees::distance(const Coordonnees& coor) const {
     double s1 = sin((coor.latitude-latitude)/2);
